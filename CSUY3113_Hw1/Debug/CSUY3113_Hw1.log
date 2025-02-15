@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\Muath\source\repos\CSUY3113_Hw1\CSUY3113_Hw1\main.cpp(30,28): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Hw1\CSUY3113_Hw1\main.cpp(31,29): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+  CSUY3113_Hw1.vcxproj -> C:\Users\Muath\source\repos\CSUY3113_Hw1\Debug\CSUY3113_Hw1.exe
