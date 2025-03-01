@@ -1,0 +1,10 @@
+﻿  main.cpp
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(38,28): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(39,15): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(516,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(517,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(519,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(520,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(522,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong\CSUY3113_Pong\main.cpp(523,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  CSUY3113_Pong.vcxproj -> C:\Users\Muath\source\repos\CSUY3113_Pong\Debug\CSUY3113_Pong.exe
