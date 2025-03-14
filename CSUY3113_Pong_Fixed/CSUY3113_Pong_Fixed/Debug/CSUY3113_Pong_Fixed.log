@@ -1,0 +1,12 @@
+﻿  main.cpp
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(38,28): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(39,15): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(516,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(517,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(519,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(520,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(522,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\CSUY3113_Pong_Fixed\main.cpp(523,27): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  ShaderProgram.cpp
+  Generating Code...
+  CSUY3113_Pong_Fixed.vcxproj -> C:\Users\Muath\source\repos\CSUY3113_Pong_Fixed\Debug\CSUY3113_Pong_Fixed.exe
