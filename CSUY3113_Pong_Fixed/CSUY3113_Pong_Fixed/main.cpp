@@ -124,6 +124,7 @@ void process_input();
 void update();
 void render();
 void shutdown();
+
 GLuint load_texture(const char* filepath)
 {
     // STEP 1: Loading the image file
