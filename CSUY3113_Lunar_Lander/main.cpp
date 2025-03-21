@@ -1,3 +1,13 @@
+/**
+* Author: Muath Alghamdi
+* Assignment: Lunar Lander
+* Date due: 2025-3-20, 11:59pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+**/
+
 #define GL_SILENCE_DEPRECATION
 #define STB_IMAGE_IMPLEMENTATION
 #define LOG(argument) std::cout << argument << '\n'
@@ -194,7 +204,6 @@ void initialise()
     g_state.player->set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
     g_state.player->set_texture_id(player_texture_id);
     g_state.player->set_speed(5.0f);
-    //g_state.player->set_acceleration(acceleration);
     g_state.player->set_width(1.0f);
     g_state.player->set_height(1.0f);
 
@@ -322,20 +331,6 @@ void draw_object(glm::mat4& object_model_matrix, GLuint& object_texture_id)
 void render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    float vertices[] = {
-      -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, // triangle 1
-      -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f  // triangle 2s
-    };
-    // Textures
-    float texture_coordinates[] = {
-      0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,   // triangle 1
-      0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,   // triangle 2
-    };
-    glVertexAttribPointer(g_shader_program.get_position_attribute(), 2, GL_FLOAT, false, 0, vertices);
-    glEnableVertexAttribArray(g_shader_program.get_position_attribute());
-    glVertexAttribPointer(g_shader_program.get_tex_coordinate_attribute(), 2, GL_FLOAT, false, 0, texture_coordinates);
-    glEnableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
-    // Bind texture
 
     if (mission_accomplished == true) {
         g_state.ui[0].render(&g_program);
@@ -347,8 +342,6 @@ void render()
     g_state.player->render(&g_program);
     for (int i = 0; i < PLATFORM_COUNT; i++) g_state.platforms[i].render(&g_program);
     
-    glDisableVertexAttribArray(g_shader_program.get_position_attribute());
-    glDisableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
     SDL_GL_SwapWindow(g_display_window);
 }
 

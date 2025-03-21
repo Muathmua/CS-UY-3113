@@ -1,3 +1,13 @@
+/**
+* Author: Muath Alghamdi
+* Assignment: Lunar Lander
+* Date due: 2025-3-20, 11:59pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+**/
+
 #define GL_SILENCE_DEPRECATION
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -258,13 +268,10 @@ void Entity::update(float delta_time, Entity *player, Entity *collidable_entitie
     m_position.x += m_velocity.x * delta_time;
     check_collision_x(collidable_entities, collidable_entity_count);
 
-    
-
     m_model_matrix = glm::mat4(1.0f);
     m_model_matrix = glm::translate(m_model_matrix, m_position);
 
-    // Newton's 2nd law i think idk im not a physics major 
-
+    // limiting and de-accelerating the lunar lander
     float de_acceleration = 0.3f;
 
     if (m_acceleration.y > -2.0f && m_acceleration.y < 3.0f) {
