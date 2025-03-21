@@ -11,7 +11,6 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <SDL_mixer.h>
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
@@ -36,8 +35,8 @@ constexpr float WINDOW_SIZE_MULT = 2.0f;
 constexpr int WINDOW_WIDTH = 640 * WINDOW_SIZE_MULT,
 WINDOW_HEIGHT = 480 * WINDOW_SIZE_MULT;
 constexpr float BG_RED = 0.0f,
-BG_BLUE = 0.0f,
 BG_GREEN = 0.0f,
+BG_BLUE = 0.0f,
 BG_OPACITY = 1.0f;
 constexpr int VIEWPORT_X = 0,
 VIEWPORT_Y = 0,
@@ -51,16 +50,14 @@ constexpr GLint TEXTURE_BORDER = 0;
 constexpr float MILLISECONDS_IN_SECOND = 1000.0;
 
 constexpr char LUNAR_LANDER_SPRITE_FILEPATH[] = "assets/Lunar_Lander.png",
-LUNAR_LANDER_ON_SPRITE_FILEPATH[] = "assets/Lunar_Lander_On.png",
+//LUNAR_LANDER_ON_SPRITE_FILEPATH[] = "assets/Lunar_Lander_On.png",
 PLATFORM_FILEPATH[] = "assets/rock_tile_.png",
-BACKGROUND_FILEPATH[] = "assets/background.png",
-FUEL_METER_FILEPATH[] = "assets/platform.png";
-
+WIN_SPRITE_FILEPATH[] = "assets/win.png",
+FAIL_SPRITE_FILEPATH[] = "assets/fail.png";
 constexpr glm::vec3 INIT_POS_SCREEN = glm::vec3(0.0f, 0.0f, 0.0f),
 INIT_SCALE_SCREEN = glm::vec3(10.0f, 7.0f, 0.0f);
 
-GLuint g_bg_texture_id;
-glm::mat4 g_screen_matrix;
+
 //constexpr glm::vec3 INIT_POS_SCREEN = glm::vec3(0.0f, 0.0f, 0.0f),
 //INIT_SCALE_SCREEN = glm::vec3(10.0f, 7.0f, 0.0f);
 
@@ -73,9 +70,13 @@ GameState g_state;
 
 bool g_game_is_running = true;
 
-ShaderProgram g_program;
-glm::mat4 g_view_matrix, g_projection_matrix;
+bool mission_accomplished = false;
+bool mission_fail = false;
 
+ShaderProgram g_program;
+glm::mat4 g_view_matrix, g_projection_matrix, g_screen_matrix;
+GLuint g_win_texture_id;
+GLuint g_fail_texture_id;
 float g_previous_ticks = 0.0f;
 float g_accumulator = 0.0f;
 
@@ -139,7 +140,6 @@ void initialise()
 
     g_view_matrix = glm::mat4(1.0f);
     g_projection_matrix = glm::ortho(-5.0f, 5.0f, -3.75f, 3.75f, -1.0f, 1.0f);
-
     g_program.set_projection_matrix(g_projection_matrix);
     g_program.set_view_matrix(g_view_matrix);
 
@@ -154,15 +154,18 @@ void initialise()
 
 
 
-    // Making a random platform the win platform
+    // Making specific platforms the win platforms
+    // Was initially going to make this using rand() for variation,
+    // But it was too inconsistent
 
-    int index_of_win_tile = (rand() % 11) + 4;
+    int index_of_win_tile = 4;
+    int index_of_win_tile2 = 9;
 
     for (int i = 0; i < PLATFORM_COUNT; i++)
     {
         g_state.platforms[i].set_texture_id(platform_texture_id);
 
-        if (i != index_of_win_tile) {
+        if (i != index_of_win_tile && i != index_of_win_tile2) {
             g_state.platforms[i].set_position(glm::vec3(i - PLATFORM_COUNT / 2.0f, -3.0f, 0.0f));
         }
         // If it is the win platform, set it as such, and change the position so it is visible
@@ -176,18 +179,25 @@ void initialise()
         g_state.platforms[i].update(0.0f, NULL, NULL, 0);
     }
 
+    g_win_texture_id = load_texture(WIN_SPRITE_FILEPATH);
+    g_state.ui = new Entity[2];
+    g_state.ui[0].set_texture_id(g_win_texture_id);
+
+    g_fail_texture_id = load_texture(FAIL_SPRITE_FILEPATH);
+    g_state.ui[1].set_texture_id(g_fail_texture_id);
+
     GLuint player_texture_id = load_texture(LUNAR_LANDER_SPRITE_FILEPATH);
 
     glm::vec3 acceleration = glm::vec3(0.0f, -2.0f, 0.0f);
-
     g_state.player = new Entity;
+    g_state.player->set_position(glm::vec3(0.0f, 3.0f, 0.0f));
+    g_state.player->set_acceleration(glm::vec3(0.0f, 0.0f, 0.0f));
     g_state.player->set_texture_id(player_texture_id);
     g_state.player->set_speed(5.0f);
-    g_state.player->set_acceleration(acceleration);
+    //g_state.player->set_acceleration(acceleration);
     g_state.player->set_width(1.0f);
     g_state.player->set_height(1.0f);
 
-    g_bg_texture_id = load_texture(BACKGROUND_FILEPATH);
     
     
 
@@ -239,9 +249,7 @@ void process_input()
 
         if (key_state[SDL_SCANCODE_UP])
         {
-            //if (g_state.player->get_collided_win() == true) {
-                g_state.player->set_acceleration_y(2.0f);
-            //}
+            g_state.player->set_acceleration_y(2.0f);
         }
 
         if (glm::length(g_state.player->get_movement()) > 1.0f)
@@ -259,15 +267,17 @@ void update()
 
     delta_time += g_accumulator;
 
-    g_screen_matrix = glm::mat4(1.0f);
-    g_screen_matrix = glm::translate(g_screen_matrix, INIT_POS_SCREEN);
-    g_screen_matrix = glm::scale(g_screen_matrix, INIT_SCALE_SCREEN);
-
     // If collided with the win platform, end the game
 
     if (g_state.player->get_collided_bottom()) {
         fuel = -1;
 
+        if (g_state.player->get_collided_win()) {
+            mission_accomplished = true;
+        }
+        else {
+            mission_fail = true;
+        }
 
     }
 
@@ -326,13 +336,19 @@ void render()
     glVertexAttribPointer(g_shader_program.get_tex_coordinate_attribute(), 2, GL_FLOAT, false, 0, texture_coordinates);
     glEnableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
     // Bind texture
-    draw_object(g_screen_matrix, g_bg_texture_id);
-    //draw_object(g_screen_matrix, g_bg_texture_id);
-    //g_state.ui->render(&g_program);
+
+    if (mission_accomplished == true) {
+        g_state.ui[0].render(&g_program);
+    }
+    if (mission_fail == true) {
+        g_state.ui[1].render(&g_program);
+    }
+
     g_state.player->render(&g_program);
     for (int i = 0; i < PLATFORM_COUNT; i++) g_state.platforms[i].render(&g_program);
     
-
+    glDisableVertexAttribArray(g_shader_program.get_position_attribute());
+    glDisableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
     SDL_GL_SwapWindow(g_display_window);
 }
 

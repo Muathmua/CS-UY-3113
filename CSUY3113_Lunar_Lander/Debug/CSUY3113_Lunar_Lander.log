@@ -1,5 +1,5 @@
 ﻿  main.cpp
-C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\main.cpp(36,28): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\main.cpp(37,15): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\main.cpp(120,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\main.cpp(35,28): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\main.cpp(36,15): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\main.cpp(121,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   CSUY3113_Lunar_Lander.vcxproj -> C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Lunar_Lander\Debug\CSUY3113_Lunar_Lander.exe
