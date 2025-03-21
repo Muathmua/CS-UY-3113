@@ -165,52 +165,28 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                 m_velocity.y    = 0;
 
                 // Collision!
-                if (collidable_entity->is_win_tile || collidable_entity->get_is_win() || collidable_entity == &collidable_entities[8]) {
-                    collidable_entity->set_collided_win();
+                // Trying to get the win tile recognized...
+                if (collidable_entity->is_win_tile) {
+                    //collidable_entity->set_collided_win();
                     m_collided_win = true;
                 }
+
                 m_collided_top  = true;
             } else if (m_velocity.y < 0)
             {
                 m_position.y      += y_overlap;
                 m_velocity.y       = 0;
 
+                if (collidable_entity->is_win_tile) {
+                    //ollidable_entity->set_collided_win();
+                    m_collided_win = true;
+                }
                 // Collision!
                 m_collided_bottom  = true;
             }
         }
     }
 }
-
-//void const Entity::check_collision_win(Entity* collidable_entities, int collidable_entity_count)
-//{
-//    for (int i = 0; i < collidable_entity_count; i++)
-//    {
-//        Entity* collidable_entity = &collidable_entities[i];
-//
-//        if (check_collision(collidable_entity))
-//        {
-//            float y_distance = fabs(m_position.y - collidable_entity->m_position.y);
-//            float y_overlap = fabs(y_distance - (m_height / 2.0f) - (collidable_entity->m_height / 2.0f));
-//            if (m_velocity.y > 0)
-//            {
-//                m_position.y -= y_overlap;
-//                m_velocity.y = 0;
-//
-//                // Collision!
-//                m_collided_win = true;
-//            }
-//            else if (m_velocity.y < 0)
-//            {
-//                m_position.y += y_overlap;
-//                m_velocity.y = 0;
-//
-//                // Collision!
-//                m_collided_win = true;
-//            }
-//        }
-//    }
-//}
 
 void const Entity::check_collision_x(Entity *collidable_entities, int collidable_entity_count)
 {

@@ -56,6 +56,9 @@ PLATFORM_FILEPATH[] = "assets/rock_tile_.png",
 BACKGROUND_FILEPATH[] = "assets/background.png",
 FUEL_METER_FILEPATH[] = "assets/platform.png";
 
+constexpr glm::vec3 INIT_POS_SCREEN = glm::vec3(0.0f, 0.0f, 0.0f),
+INIT_SCALE_SCREEN = glm::vec3(10.0f, 7.0f, 0.0f);
+
 GLuint g_bg_texture_id;
 glm::mat4 g_screen_matrix;
 //constexpr glm::vec3 INIT_POS_SCREEN = glm::vec3(0.0f, 0.0f, 0.0f),
@@ -81,8 +84,6 @@ bool out_of_fuel = false;
 float fuel = 5000.0f;
 
 
-//int index_of_win_tile = (rand() % 12) + 3;
-int index_of_win_tile = 8;
 
 const Uint8* key_state = SDL_GetKeyboardState(NULL);
 
@@ -151,9 +152,11 @@ void initialise()
 
     g_state.platforms = new Entity[PLATFORM_COUNT];
 
-    // Set the type of every platform entity to PLATFORM
 
 
+    // Making a random platform the win platform
+
+    int index_of_win_tile = (rand() % 11) + 4;
 
     for (int i = 0; i < PLATFORM_COUNT; i++)
     {
@@ -162,6 +165,7 @@ void initialise()
         if (i != index_of_win_tile) {
             g_state.platforms[i].set_position(glm::vec3(i - PLATFORM_COUNT / 2.0f, -3.0f, 0.0f));
         }
+        // If it is the win platform, set it as such, and change the position so it is visible
         else {
             g_state.platforms[i].set_win_tile();
             g_state.platforms[i].set_position(glm::vec3(i - PLATFORM_COUNT / 2.0f, -2.5f, 0.0f));
@@ -254,11 +258,17 @@ void update()
     g_previous_ticks = ticks;
 
     delta_time += g_accumulator;
-    Entity* fuck = &g_state.platforms[index_of_win_tile];
+
+    g_screen_matrix = glm::mat4(1.0f);
+    g_screen_matrix = glm::translate(g_screen_matrix, INIT_POS_SCREEN);
+    g_screen_matrix = glm::scale(g_screen_matrix, INIT_SCALE_SCREEN);
+
+    // If collided with the win platform, end the game
+
+    if (g_state.player->get_collided_bottom()) {
+        fuel = -1;
 
 
-    if (g_state.player->get_collided_win()) {
-        g_game_is_running = false;
     }
 
     if (key_state[SDL_SCANCODE_LEFT]) {
@@ -302,7 +312,21 @@ void draw_object(glm::mat4& object_model_matrix, GLuint& object_texture_id)
 void render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-
+    float vertices[] = {
+      -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, // triangle 1
+      -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f  // triangle 2s
+    };
+    // Textures
+    float texture_coordinates[] = {
+      0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,   // triangle 1
+      0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,   // triangle 2
+    };
+    glVertexAttribPointer(g_shader_program.get_position_attribute(), 2, GL_FLOAT, false, 0, vertices);
+    glEnableVertexAttribArray(g_shader_program.get_position_attribute());
+    glVertexAttribPointer(g_shader_program.get_tex_coordinate_attribute(), 2, GL_FLOAT, false, 0, texture_coordinates);
+    glEnableVertexAttribArray(g_shader_program.get_tex_coordinate_attribute());
+    // Bind texture
+    draw_object(g_screen_matrix, g_bg_texture_id);
     //draw_object(g_screen_matrix, g_bg_texture_id);
     //g_state.ui->render(&g_program);
     g_state.player->render(&g_program);
@@ -323,7 +347,7 @@ void shutdown()
 // ––––– GAME LOOP ––––– //
 int main(int argc, char* argv[])
 {
-    std::cout << "hello" << std::endl;
+
     initialise();
 
     while (g_game_is_running)
