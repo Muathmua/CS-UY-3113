@@ -13,6 +13,27 @@
 *    This was also present in code recieved from the lectures, so it's likely an issue on my PC.
 * 2. If played on a laptop whose performance decreases when not plugged to a charger, sonic's acceleration
 *    is bugged.
+* 3. Scene switches that occur when losing all 3 lives or completing all 3 levels rarely throw exceptions
+*    
+* ---Behavior 1 and 3 is very variable, I am unsure how to debug it; as they both rely on code proven to work
+*    in other scenarios.
+* 
+* --------------------------------------------------------
+* CONTROLS
+* --------------------------------------------------------
+*  Right arrow key --> move right
+*  Left arrow key --> move left
+*  Down arrow key --> roll
+*  Space --> jump
+*  A --> Spin dash left
+*  D --> Spin dash right
+*  
+*  0 --> Switch to menu
+*  1 --> Switch to level 1
+*  2 --> Switch to level 2
+*  3 --> Switch to level 3
+*  8 --> Switch to game win screen
+*  9 --> Switch to game lose screen
 **/
 
 
@@ -69,12 +90,12 @@ enum AppStatus { RUNNING, TERMINATED };
 
 // ————— GLOBAL VARIABLES ————— //
 Scene *g_current_scene;
+Level_Lose* g_level_lose;
+Level_Win* g_level_win;
 Level_0* g_menu;
 LevelA *g_level_a;
 LevelB *g_level_b;
 LevelC* g_level_c;
-Level_Lose* g_level_lose;
-Level_Win* g_level_win;
 SDL_Window* g_display_window;
 
 AppStatus g_app_status = RUNNING;
@@ -155,7 +176,7 @@ void initialise()
 
 void process_input()
 {
-    if (g_current_scene != g_menu) {
+    if (!controls_off) {
         g_current_scene->get_state().player->set_movement(glm::vec3(0.0f));
     }
     SDL_Event event;
@@ -189,6 +210,12 @@ void process_input()
                         break;
                     case SDLK_3:
                         switch_to_scene(g_level_c);
+                        break;
+                    case SDLK_9:
+                        switch_to_scene(g_level_lose);
+                        break;
+                    case SDLK_8:
+                        switch_to_scene(g_level_win);
                         break;
                     case SDLK_SPACE:
                         // ————— JUMPING ————— //
@@ -227,7 +254,6 @@ void process_input()
             g_current_scene->get_state().player->spin_dash_right();
             Mix_PlayChannel(-1, g_current_scene->get_state().spin_dash_sfx, 0);
         }
-        else if (key_state[SDL_SCANCODE_Y]) switch_to_scene(g_level_b);
 
         if (glm::length(g_current_scene->get_state().player->get_movement()) > 1.0f)
             g_current_scene->get_state().player->normalise_movement();
@@ -278,6 +304,7 @@ void update()
             }
 
             if (damage_timer <= 0.0f && g_current_scene->get_state().player->took_damage()) {
+                Mix_PlayChannel(-1, g_current_scene->get_state().death_sfx, 0);
                 g_lives -= 1;
                 g_current_scene->get_state().player->set_position(glm::vec3(5.0f, -3.0f, 0.0f));
                 g_current_scene->get_state().player->set_took_damage(false);

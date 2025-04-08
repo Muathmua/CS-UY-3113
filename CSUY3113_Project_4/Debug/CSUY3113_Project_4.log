@@ -1,2 +1,17 @@
 ﻿  Entity.cpp
+  LevelA.cpp
+  LevelB.cpp
+  LevelC.cpp
+  Map.cpp
+C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Project_4\Map.cpp(132,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Project_4\Map.cpp(133,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Scene.cpp
+  ShaderProgram.cpp
+  Utility.cpp
+C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Project_4\Utility.cpp(85,23): warning C4018: '<': signed/unsigned mismatch
+  game_over.cpp
+  game_win.cpp
+  main.cpp
+  menu.cpp
+  Generating Code...
   CSUY3113_Project_4.vcxproj -> C:\Users\Muath\Documents\GitHub\CS-UY-3113-Hw1\CSUY3113_Project_4\Debug\CSUY3113_Project_4.exe

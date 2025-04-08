@@ -1,3 +1,41 @@
+/**
+* Author: Muath Alghamdi
+* Assignment: Rise of the AI
+* Date due: 2025-04-07, 11:59pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+* --------------------------------------------------------
+* KNOWN WEIRD BEHAVIOR (BUGS?)
+* --------------------------------------------------------
+* 1. Sometimes enemies require multiple switches to a scene to spawn.
+*    This was also present in code recieved from the lectures, so it's likely an issue on my PC.
+* 2. If played on a laptop whose performance decreases when not plugged to a charger, sonic's acceleration
+*    is bugged.
+* 3. Scene switches that occur when losing all 3 lives or completing all 3 levels rarely throw exceptions
+*
+* ---Behavior 1 and 3 is very variable, I am unsure how to debug it; as they both rely on code proven to work
+*    in other scenarios.
+*
+* --------------------------------------------------------
+* CONTROLS
+* --------------------------------------------------------
+*  Right arrow key --> move right
+*  Left arrow key --> move left
+*  Down arrow key --> roll
+*  Space --> jump
+*  A --> Spin dash left
+*  D --> Spin dash right
+*
+*  0 --> Switch to menu
+*  1 --> Switch to level 1
+*  2 --> Switch to level 2
+*  3 --> Switch to level 3
+*  8 --> Switch to game win screen
+*  9 --> Switch to game lose screen
+**/
+
 #include "game_over.h"
 #include "Utility.h"
 
@@ -29,58 +67,38 @@ Level_Lose::~Level_Lose()
 void Level_Lose::initialise()
 {
     GLuint map_texture_id = Utility::load_texture("assets/game_over.png");
-    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_LOSE_DATA, map_texture_id, 10.0f, 1, 1);
+    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_LOSE_DATA, map_texture_id, 8.0f, 1, 1);
 
-    //GLuint player_texture_id = Utility::load_texture(SPRITESHEET_FILEPATH);
+    GLuint player_texture_id = Utility::load_texture(SPRITESHEET_FILEPATH);
 
-    //int player_animations[5][2] =
-    //{
-    //    { 0, 0 }, // for Sonic to face left
-    //    { 1, 1 }, // for Sonic to face right
-    //    { 5, 6 },  // for Sonic to move to the left,
-    //    { 2, 3 }, // for Sonic to move to the right,
-    //    { 4, 4 } // for Sonic to jump
-    //};
+    int player_animations[5][2] =
+    {
+        { 0, 0 }, // for Sonic to face left
+        { 1, 1 }, // for Sonic to face right
+        { 5, 6 },  // for Sonic to move to the left,
+        { 2, 3 }, // for Sonic to move to the right,
+        { 4, 4 } // for Sonic to jump
+    };
 
-    //glm::vec3 acceleration = glm::vec3(0.0f, -7.81f, 0.0f);
+    glm::vec3 acceleration = glm::vec3(0.0f, -7.81f, 0.0f);
 
-    //m_game_state.player = new Entity(
-    //    player_texture_id,         // texture id
-    //    5.0f,                      // speed
-    //    acceleration,              // acceleration
-    //    5.0f,                      // jumping power
-    //    player_animations,  // animation index sets
-    //    0.0f,                      // animation time
-    //    2,                         // animation frame amount
-    //    0,                         // current animation index
-    //    5,                         // animation column amount
-    //    2,                         // animation row amount
-    //    1.0f,                      // width
-    //    1.0f,                       // height
-    //    PLAYER
-    //);
+    m_game_state.player = new Entity(
+        player_texture_id,         // texture id
+        5.0f,                      // speed
+        acceleration,              // acceleration
+        5.0f,                      // jumping power
+        player_animations,  // animation index sets
+        0.0f,                      // animation time
+        2,                         // animation frame amount
+        0,                         // current animation index
+        5,                         // animation column amount
+        2,                         // animation row amount
+        1.0f,                      // width
+        1.0f,                       // height
+        PLAYER
+    );
 
-    //m_game_state.player->set_position(glm::vec3(5.0f, 0.0f, 0.0f));
-
-    // Jumping
-    //m_game_state.player->set_jumping_power(3.0f);
-
-    /**
-     Enemies' stuff */
-     //GLuint enemy_texture_id = Utility::load_texture(ENEMY_FILEPATH);
-
-     //m_game_state.enemies = new Entity[ENEMY_COUNT];
-
-     //for (int i = 0; i < ENEMY_COUNT; i++)
-     //{
-     //    m_game_state.enemies[i] = Entity(enemy_texture_id, 1.0f, 1.0f, 1.0f, ENEMY, GUARD, IDLE);
-     //}
-
-
-     //m_game_state.enemies[0].set_position(glm::vec3(10.0f, 0.0f, 0.0f));
-     ////m_game_state.enemies[0].set_movement(glm::vec3(0.0f));
-     //m_game_state.enemies[0].set_acceleration(glm::vec3(0.0f, -9.81f, 0.0f));
-
+    m_game_state.player->set_position(glm::vec3(5.0f, -3.0f, 0.0f));
      /**
       BGM and SFX
       */
