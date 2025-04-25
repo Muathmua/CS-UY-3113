@@ -1,3 +1,12 @@
+/**
+* Author: Muath Alghamdi
+* Assignment: Chase for Pace
+* Date due: April 25, 2:00pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+**/
 #define GL_SILENCE_DEPRECATION
 #define GL_GLEXT_PROTOTYPES 1
 #define FIXED_TIMESTEP 0.0166666f
@@ -29,8 +38,8 @@
 #include "LevelD.h"
 
 // ————— CONSTANTS ————— //
-constexpr int WINDOW_WIDTH = 640,
-WINDOW_HEIGHT = 480;
+constexpr int WINDOW_WIDTH = 640 * 2,
+WINDOW_HEIGHT = 480* 2;
 
 constexpr float BG_RED = 0.4f,
 BG_BLUE = 0,

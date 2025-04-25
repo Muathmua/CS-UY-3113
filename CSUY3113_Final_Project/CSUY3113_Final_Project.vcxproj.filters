@@ -85,11 +85,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="plan.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="shaders\fragment_textured.glsl">
       <Filter>Source Files</Filter>
     </None>

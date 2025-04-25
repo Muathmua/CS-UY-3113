@@ -1,3 +1,13 @@
+/**
+* Author: Muath Alghamdi
+* Assignment: Chase for Pace
+* Date due: April 25, 2:00pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+**/
+
 #define GL_SILENCE_DEPRECATION
 #define STB_IMAGE_IMPLEMENTATION
 

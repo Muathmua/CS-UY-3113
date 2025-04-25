@@ -168,9 +168,6 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="plan.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="shaders\fragment.glsl" />
     <None Include="shaders\fragment_textured.glsl" />
     <None Include="shaders\vertex.glsl" />
