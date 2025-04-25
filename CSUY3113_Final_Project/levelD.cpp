@@ -69,6 +69,8 @@ LevelD::~LevelD()
     Mix_FreeChunk(m_game_state.countdown_sfx);
     Mix_FreeChunk(m_game_state.collide_sfx);
     Mix_FreeMusic(m_game_state.bgm);
+    Mix_FreeChunk(m_game_state.tire_sfx);
+
 }
 
 void LevelD::initialise()
@@ -162,6 +164,8 @@ void LevelD::initialise()
 
     m_game_state.collide_sfx = Mix_LoadWAV("assets/collide_sfx.wav");
     m_game_state.engine_sfx = Mix_LoadWAV("assets/engine_sfx.wav");
+    m_game_state.tire_sfx = Mix_LoadWAV("assets/tire_screech.wav");
+
 
 }
 

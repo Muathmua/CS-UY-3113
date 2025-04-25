@@ -66,6 +66,10 @@ glm::mat4 g_view_matrix, g_projection_matrix;
 float g_previous_ticks = 0.0f;
 float g_accumulator = 0.0f;
 
+bool tire_audio_check = false;
+int toggle = 1;
+
+
 void switch_to_scene(Scene* scene)
 {
     g_current_scene = scene;
@@ -168,6 +172,9 @@ void process_input()
             case SDLK_0:
                 switch_to_scene(g_menu);
                 break;
+            case SDLK_SPACE:
+                g_shader_program.toggle_effect(1.0f);
+                break;
             default:
                 break;
             }
@@ -208,13 +215,12 @@ void update()
     float delta_time = ticks - g_previous_ticks;
     g_previous_ticks = ticks;
     delta_time += g_accumulator;
-    
+
     if (g_current_scene != g_menu) {
         if (g_current_scene->get_state().player->get_collided_bottom() == true ||
             g_current_scene->get_state().player->get_collided_top() == true ||
             g_current_scene->get_state().player->get_collided_left() == true ||
             g_current_scene->get_state().player->get_collided_right() == true) {
-
             Mix_PlayChannel(-1, g_current_scene->get_state().collide_sfx, 0);
             Mix_VolumeChunk(g_current_scene->get_state().collide_sfx, MIX_MAX_VOLUME / 3);
 
@@ -225,7 +231,7 @@ void update()
             switch_to_scene(g_level_a);
             g_level_a->time_over = false;
         }
-        if (g_current_scene->get_state().player->get_position().x >= 41.0f) {
+        if (g_current_scene->get_state().player->get_position().x >= 42.0f) {
             switch_to_scene(g_level_b);
 
         }
@@ -265,16 +271,33 @@ void update()
 
     g_accumulator = delta_time;
 
-
-    // ————— PLAYER CAMERA ————— //
+    // ————— PLAYER CAMERA and effect! ————— //
     g_view_matrix = glm::mat4(1.0f);
     if (g_current_scene != g_menu) {
+
+        if (g_current_scene->get_state().player->get_velocity().x > 2.0f ||
+            g_current_scene->get_state().player->get_velocity().x < -2.0f ||
+            g_current_scene->get_state().player->get_velocity().y > 2.0f ||
+            g_current_scene->get_state().player->get_velocity().x < -2.0f) {
+            g_shader_program.toggle_effect(1);
+            if (!tire_audio_check) {
+                Mix_PlayChannel(-1, g_current_scene->get_state().tire_sfx, 0);
+                Mix_VolumeChunk(g_current_scene->get_state().tire_sfx, MIX_MAX_VOLUME / 3);
+                tire_audio_check = true;
+            }
+        }
+        else {
+            g_shader_program.toggle_effect(0);
+            tire_audio_check = false;
+        }
+       
         g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-g_current_scene->get_state().player->get_position().x, -g_current_scene->get_state().player->get_position().y, 0));
     }
     else {
         g_view_matrix = glm::translate(g_view_matrix, glm::vec3(0.0f, 0.0f, 0.0f));
 
     }
+
   
 }
 

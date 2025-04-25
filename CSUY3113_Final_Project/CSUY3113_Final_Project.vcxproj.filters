@@ -89,4 +89,18 @@
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment_textured.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shaders\fragment.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shaders\vertex.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shaders\vertex_textured.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

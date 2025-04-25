@@ -30,6 +30,8 @@ void ShaderProgram::load(const char* vertex_shader_file, const char* fragment_sh
 
     m_position_attribute = glGetAttribLocation(m_program_id, "position");
     m_tex_coord_attribute = glGetAttribLocation(m_program_id, "texCoord");
+    
+    m_effect_toggle = glGetUniformLocation(m_program_id, "effect_toggle");
 
     set_colour(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -110,4 +112,10 @@ void ShaderProgram::set_projection_matrix(const glm::mat4& matrix)
 {
     glUseProgram(m_program_id);
     glUniformMatrix4fv(m_projection_matrix_uniform, 1, GL_FALSE, &matrix[0][0]);
+}
+
+void ShaderProgram::toggle_effect(int val) {
+    glUseProgram(m_program_id);
+    glUniform1i(m_effect_toggle, val);
+
 }

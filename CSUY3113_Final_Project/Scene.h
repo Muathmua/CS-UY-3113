@@ -31,7 +31,7 @@ struct GameState
     Mix_Chunk* countdown_sfx;
     Mix_Chunk* collide_sfx;
     Mix_Chunk* engine_sfx;
-
+    Mix_Chunk* tire_sfx;
     
     // ————— POINTERS TO OTHER SCENES ————— //
     int next_scene_id;

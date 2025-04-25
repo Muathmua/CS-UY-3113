@@ -170,6 +170,12 @@
   <ItemGroup>
     <Text Include="plan.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment.glsl" />
+    <None Include="shaders\fragment_textured.glsl" />
+    <None Include="shaders\vertex.glsl" />
+    <None Include="shaders\vertex_textured.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

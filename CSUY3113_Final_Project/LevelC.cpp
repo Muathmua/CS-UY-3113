@@ -85,6 +85,8 @@ LevelC::~LevelC()
     Mix_FreeChunk(m_game_state.countdown_sfx);
     Mix_FreeChunk(m_game_state.collide_sfx);
     Mix_FreeMusic(m_game_state.bgm);
+    Mix_FreeChunk(m_game_state.tire_sfx);
+
 }
 
 void LevelC::initialise()
@@ -171,13 +173,15 @@ void LevelC::initialise()
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
     m_game_state.bgm = Mix_LoadMUS("assets/levelC_music.mp3");
     Mix_PlayMusic(m_game_state.bgm, -1);
-    Mix_VolumeMusic(MIX_MAX_VOLUME / 5);
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 6);
     m_game_state.countdown_sfx = Mix_LoadWAV("assets/countdown_sfx.wav");
     Mix_PlayChannel(-1, m_game_state.countdown_sfx, 0);
     Mix_VolumeChunk(m_game_state.countdown_sfx, MIX_MAX_VOLUME / 3);
 
     m_game_state.collide_sfx = Mix_LoadWAV("assets/collide_sfx.wav");
     m_game_state.engine_sfx = Mix_LoadWAV("assets/engine_sfx.wav");
+    m_game_state.tire_sfx = Mix_LoadWAV("assets/tire_screech.wav");
+
 
 }
 
