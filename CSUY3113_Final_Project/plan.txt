@@ -1,0 +1,26 @@
+Level 2 can have moving platform obstacles, maybe a train passing the road or clearing a highway crossy road style
+Level 3 can have difficult race track with obstacles and chasing enemies
+
+boss level where the car just goes to the right, animation up and down only goes bottom right and top right
+dodging an enemy for an amount of time?
+
+I rlly want to do an ai racer enemy type
+
+things u might need to do:
+- redo the tilesheet to add more tiles
+- fix the animation for the car bottom right
+- fix audio and music
+- make the finish line and path to victory more obvious
+	maybe just a text intro? How to Play scene
+- SHADER EFFECTS??
+
+FINAL GAME STRUCTURE:
+- 3 levels
+	level 1: one chaser, 60 second time limit, race track
+	level 2: several blockers, 45 second time limit, race track
+	level 3: enemy racer, no time limit, simple race track against perfect AI
+
+- playground (OPTIONAL)
+	large level with a bunch of chasers and blockers
+
+
